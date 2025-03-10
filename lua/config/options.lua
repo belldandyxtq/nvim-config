@@ -6,12 +6,96 @@ vim.opt.list = true
 vim.opt.termguicolors = true
 
 vim.g.lazyvim_python_lsp = "pyright"
-vim.g.lazyvim_python_ruff = "ruff"
 
-opts = function(_, opts)
-    local servers = { "pyright", "basedpyright", "ruff", "ruff_lsp", ruff, lsp }
-    for _, server in ipairs(servers) do
-        opts.servers[server] = opts.servers[server] or {}
-        opts.servers[server].enabled = server == lsp or server == ruff
-    end
-end
+--     local servers = { "pyright", "basedpyright", "ruff", "ruff_lsp", ruff, lsp }
+-- opts = function(_, opts)
+--     for _, server in ipairs(servers) do
+--         opts.servers[server] = opts.servers[server] or {}
+--         opts.servers[server].enabled = server == lsp or server == ruff
+--     end
+-- end
+
+vim.opt.clipboard = "unnamedplus"
+
+-- opts = function()
+--     local plugin = require("lazy.core.config").plugins["conform.nvim"]
+--     if plugin.config ~= M.setup then
+--         LazyVim.error({
+--             "Don't set `plugin.config` for `conform.nvim`.\n",
+--             "This will break **LazyVim** formatting.\n",
+--             "Please refer to the docs at https://www.lazyvim.org/plugins/formatting",
+--         }, { title = "LazyVim" })
+--     end
+--     ---@type conform.setupOpts
+--     local opts = {
+--         default_format_opts = {
+--             timeout_ms = 3000,
+--             async = false, -- not recommended to change
+--             quiet = false, -- not recommended to change
+--             lsp_format = "fallback", -- not recommended to change
+--             notify_on_error = false,
+--             format_on_save = function(bufnr)
+--                 if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+--                     return
+--                 end
+--                 local disable_filetypes = { c = false, cpp = false }
+--                 return {
+--                     timeout_ms = 500,
+--                     lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+--                 }
+--             end,
+--         },
+--         formatters_by_ft = {
+--             lua = { "stylua" },
+--             python = { "black" },
+--             sh = { "shfmt" },
+--         },
+--         keys = {
+--             {
+--                 "<leader>t",
+--                 function()
+--                     -- If autoformat is currently disabled for this buffer,
+--                     -- then enable it, otherwise disable it
+--                     if vim.g.disable_autoformat then
+--                         vim.cmd("FormatEnable")
+--                         vim.notify("Enabled autoformat for current buffer")
+--                     else
+--                         vim.cmd("FormatDisable!")
+--                         vim.notify("Disabled autoformat for current buffer")
+--                     end
+--                 end,
+--                 desc = "Toggle autoformat for current buffer",
+--             },
+--         },
+--         -- The options you set here will be merged with the builtin formatters.
+--         -- You can also define any custom formatters here.
+--         ---@type table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride>
+--         formatters = {
+--             injected = { options = { ignore_errors = true } },
+--         },
+--         config = function(_, opts)
+--             require("conform").setup(opts)
+--
+--             vim.api.nvim_create_user_command("FormatDisable", function(args)
+--                 if args.bang then
+--                     -- :FormatDisable! disables autoformat for this buffer only
+--                     vim.b.disable_autoformat = true
+--                 else
+--                     -- :FormatDisable disables autoformat globally
+--                     vim.g.disable_autoformat = true
+--                 end
+--             end, {
+--                 desc = "Disable autoformat-on-save",
+--                 bang = true, -- allows the ! variant
+--             })
+--
+--             vim.api.nvim_create_user_command("FormatEnable", function()
+--                 vim.b.disable_autoformat = false
+--                 vim.g.disable_autoformat = false
+--             end, {
+--                 desc = "Re-enable autoformat-on-save",
+--             })
+--         end,
+--     }
+--     return opts
+-- end

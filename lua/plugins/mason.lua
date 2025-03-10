@@ -3,9 +3,10 @@ return {
     opts = {
         ensure_installed = {
             "mypy",
-            "ruff",
             "pyright",
             "black",
+            "flake8",
+            "isort",
             "debugpy",
         },
     },

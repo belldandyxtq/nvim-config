@@ -51,16 +51,34 @@ require("lazy").setup({
         },
     },
 })
+require("lint").linters_by_ft = {
+    python = { "mypy" },
+}
 
 require("conform").setup({
+    -- formatters = {
+    --     black = {
+    --         -- Specify the desired line length
+    --         args = { "--line-length", "120" }, -- change 88 to your desired line length
+    --     },
+    -- },
     formatters_by_ft = {
         lua = { "stylua" },
         -- Conform will run multiple formatters sequentially
-        python = { "isort", "black" },
+        --   formatters_by_ft = {
+        python = { "isort", "black", "flake8" },
+        -- You can customize some of the format options for the filetype (:help conform.format)
+        rust = { "rustfmt", lsp_format = "fallback" },
+        -- Conform will run the first available formatter
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+    },
+    formatters = {
+        black = {
+            prepend_args = { "--line-length", "120" },
+        },
     },
 })
 
-require("lint").linters_by_ft = {
-    markdown = { "vale" },
-    python = { "black", "mypy" },
-}
+require("mason-lspconfig").setup({
+    ensure_installed = { "isort@5.13.2" },
+})
